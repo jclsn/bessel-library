@@ -16,6 +16,8 @@
 #ifndef BESSEL_LIBRARY_H
 #define BESSEL_LIBRARY_H
 
+#include <stdlib.h>
+
 #include "bessel-library/version.h"
 #include "bessel-library/core/airy_ai.h"
 #include "bessel-library/core/airy_bi.h"
