@@ -1,4 +1,4 @@
-/* 
+/*
     Bessel Library: A C library with routines for computing Bessel functions
 
     File: include/bessel-library/core/cyl_h1.h
@@ -30,7 +30,7 @@
     Parameters:
     - nu, real order of H1_nu(z).
     - z, complex argument of H1_nu(z).
-            
+
     Implementation: Similar to the cyl_h1_seq() function.
 */
 BESSEL_LIBRARY_API_IMPL_
@@ -39,7 +39,7 @@ tpdfcplx_impl_ cyl_h1(double nu, tpdfcplx_impl_ z)
 {
     /* Array of one size */
     tpdfcplx_impl_ ch1[1];
-    
+
     /* Compute cyl_h1_full_seq_impl_ */
     cyl_h1_full_seq_impl_(nu, 1, z, ch1, 0);
 
@@ -47,7 +47,7 @@ tpdfcplx_impl_ cyl_h1(double nu, tpdfcplx_impl_ z)
     return ch1[0];
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -58,7 +58,7 @@ tpdfcplx_impl_ cyl_h1(double nu, tpdfcplx_impl_ z)
     Parameters:
     - nu, real order of H1_nu(z)*exp(-i*z).
     - z, complex argument of H1_nu(z)*exp(-i*z).
-                
+
     Implementation: Similar to the cyl_h1_seq() function.
 */
 BESSEL_LIBRARY_API_IMPL_
@@ -67,7 +67,7 @@ tpdfcplx_impl_ cyl_h1_scal(double nu, tpdfcplx_impl_ z)
 {
     /* Array of one size */
     tpdfcplx_impl_ ch1[1];
-    
+
     /* Compute cyl_h1_full_seq_impl_ */
     cyl_h1_full_seq_impl_(nu, 1, z, ch1, 1);
 
@@ -75,7 +75,7 @@ tpdfcplx_impl_ cyl_h1_scal(double nu, tpdfcplx_impl_ z)
     return ch1[0];
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -98,14 +98,13 @@ tpdfcplx_impl_ cyl_h1_scal(double nu, tpdfcplx_impl_ z)
     It yields INFINITY + I * INFINITY when abs(z)=0.
 */
 BESSEL_LIBRARY_API_IMPL_
-void cyl_h1_seq(double nu, int n,
-    tpdfcplx_impl_ z, tpdfcplx_impl_ *cyl_h1_arr)
+void cyl_h1_seq(double nu, int n, tpdfcplx_impl_ z, tpdfcplx_impl_ *cyl_h1_arr)
 #ifndef BESSEL_LIBRARY_IMPORTS
 {
     cyl_h1_full_seq_impl_(nu, n, z, cyl_h1_arr, 0);
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -121,18 +120,17 @@ void cyl_h1_seq(double nu, int n,
     - z, complex argument of H1_nu(z)*exp(-i*z).
     - cyl_h2_scal_arr, array of size n to output  H1_nu(z)*exp(-i*z) for the
     orders nu, nu+1, ..., nu+n-1.
-                
+
     Implementation: Similar to the cyl_h1_seq() function.
 */
 BESSEL_LIBRARY_API_IMPL_
-void cyl_h1_scal_seq(double nu, int n,
-    tpdfcplx_impl_ z, tpdfcplx_impl_ *cyl_h2_scal_arr)
+void cyl_h1_scal_seq(double nu, int n, tpdfcplx_impl_ z, tpdfcplx_impl_ *cyl_h2_scal_arr)
 #ifndef BESSEL_LIBRARY_IMPORTS
 {
     cyl_h1_full_seq_impl_(nu, n, z, cyl_h2_scal_arr, 1);
 }
 #else
-;
+    ;
 #endif
 
 #endif /* BESSEL_LIBRARY_CYL_H1_H */

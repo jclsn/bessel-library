@@ -1,4 +1,4 @@
-/* 
+/*
     Bessel Library: A C library with routines for computing Bessel functions
 
     File: include/bessel-library/core/cyl_h2.h
@@ -30,7 +30,7 @@
     Parameters:
     - nu, real order of H2_nu(z).
     - z, complex argument of H2_nu(z).
-                    
+
     Implementation: Similar to the cyl_h2_seq() function.
 */
 BESSEL_LIBRARY_API_IMPL_
@@ -39,7 +39,7 @@ tpdfcplx_impl_ cyl_h2(double nu, tpdfcplx_impl_ z)
 {
     /* Array of one size */
     tpdfcplx_impl_ ch2[1];
-    
+
     /* Compute cyl_h2_full_seq_impl_ */
     cyl_h2_full_seq_impl_(nu, 1, z, ch2, 0);
 
@@ -47,7 +47,7 @@ tpdfcplx_impl_ cyl_h2(double nu, tpdfcplx_impl_ z)
     return ch2[0];
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -58,7 +58,7 @@ tpdfcplx_impl_ cyl_h2(double nu, tpdfcplx_impl_ z)
     Parameters:
     - nu, real order of H2_nu(z)*exp(i*z).
     - z, complex argument of H2_nu(z)*exp(i*z).
-                    
+
     Implementation: Similar to the cyl_h2_seq() function.
 */
 BESSEL_LIBRARY_API_IMPL_
@@ -67,7 +67,7 @@ tpdfcplx_impl_ cyl_h2_scal(double nu, tpdfcplx_impl_ z)
 {
     /* Array of one size */
     tpdfcplx_impl_ ch2[1];
-    
+
     /* Compute cyl_h2_full_seq_impl_ */
     cyl_h2_full_seq_impl_(nu, 1, z, ch2, 1);
 
@@ -75,7 +75,7 @@ tpdfcplx_impl_ cyl_h2_scal(double nu, tpdfcplx_impl_ z)
     return ch2[0];
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -90,7 +90,7 @@ tpdfcplx_impl_ cyl_h2_scal(double nu, tpdfcplx_impl_ z)
     - z, complex argument of H2_nu(z).
     - cyl_h2_arr, array of size n to output H2_nu(z) for the orders nu, nu+1,
     ..., nu+n-1.
-                    
+
     Implementation: In general, the implementation is based on the D. E. Amos
     Fortran 77 routines from the Slatec library [3]. Such Fortran routines,
     and all their dependencies, were carefully translated to C. Negative
@@ -98,14 +98,13 @@ tpdfcplx_impl_ cyl_h2_scal(double nu, tpdfcplx_impl_ z)
     INFINITY + I * INFINITY when abs(z)=0.
 */
 BESSEL_LIBRARY_API_IMPL_
-void cyl_h2_seq(double nu, int n,
-    tpdfcplx_impl_ z, tpdfcplx_impl_ *cyl_h2_arr)
+void cyl_h2_seq(double nu, int n, tpdfcplx_impl_ z, tpdfcplx_impl_ *cyl_h2_arr)
 #ifndef BESSEL_LIBRARY_IMPORTS
 {
     cyl_h2_full_seq_impl_(nu, n, z, cyl_h2_arr, 0);
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -121,18 +120,17 @@ void cyl_h2_seq(double nu, int n,
     - z, complex argument of H2_nu(z)*exp(i*z).
     - cyl_h2_scal_arr, array of size n to output H2_nu(z)*exp(i*z) for the
     orders nu, nu+1, ..., nu+n-1.
-                    
+
     Implementation: Similar to the cyl_h2_seq() function.
 */
 BESSEL_LIBRARY_API_IMPL_
-void cyl_h2_scal_seq(double nu, int n,
-    tpdfcplx_impl_ z, tpdfcplx_impl_ *cyl_h2_scal_arr)
+void cyl_h2_scal_seq(double nu, int n, tpdfcplx_impl_ z, tpdfcplx_impl_ *cyl_h2_scal_arr)
 #ifndef BESSEL_LIBRARY_IMPORTS
 {
     cyl_h2_full_seq_impl_(nu, n, z, cyl_h2_scal_arr, 1);
 }
 #else
-;
+    ;
 #endif
 
 #endif /* BESSEL_LIBRARY_CYL_H2_H */

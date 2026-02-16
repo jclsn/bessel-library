@@ -1,4 +1,4 @@
-/* 
+/*
     Bessel Library: A C library with routines for computing Bessel functions
 
     File: include/bessel-library.h
@@ -16,7 +16,6 @@
 #ifndef BESSEL_LIBRARY_H
 #define BESSEL_LIBRARY_H
 
-#include "bessel-library/version.h"
 #include "bessel-library/core/airy_ai.h"
 #include "bessel-library/core/airy_bi.h"
 #include "bessel-library/core/cyl_h1.h"
@@ -25,5 +24,6 @@
 #include "bessel-library/core/cyl_j.h"
 #include "bessel-library/core/cyl_k.h"
 #include "bessel-library/core/cyl_y.h"
+#include "bessel-library/version.h"
 
 #endif /* BESSEL_LIBRARY_H */

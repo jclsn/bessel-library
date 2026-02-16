@@ -15,8 +15,9 @@
 #ifndef BESSEL_LIBRARY_FMAX_IMPL_H
 #define BESSEL_LIBRARY_FMAX_IMPL_H
 
-static inline double fmax_impl_(double x, double y) {
-    return(x > y ? x : y);
+static inline double fmax_impl_(double x, double y)
+{
+    return (x > y ? x : y);
 }
 
 #endif /* BESSEL_LIBRARY_FMAX_IMPL_H */

@@ -1,4 +1,4 @@
-/* 
+/*
     Bessel Library: A C library with routines for computing Bessel functions
 
     File: include/bessel-library/impl/slatec_zdiv_impl_.h
@@ -22,29 +22,29 @@
 
 /* DECK ZDIV */
 /* Subroutine */
-static inline int slatec_zdiv_impl_(double *ar, double *ai, double *br, 
-	double *bi, double *cr, double *ci)
+static inline int slatec_zdiv_impl_(double *ar, double *ai, double *br, double *bi, double *cr,
+                                    double *ci)
 {
     static double ca, cb, cc, cd, bm;
 
-/* ***BEGIN PROLOGUE  ZDIV */
-/* ***SUBSIDIARY */
-/* ***PURPOSE  Subsidiary to ZBESH, ZBESI, ZBESJ, ZBESK, ZBESY, ZAIRY and */
-/*            ZBIRY */
-/* ***LIBRARY   SLATEC */
-/* ***TYPE      ALL (ZDIV-A) */
-/* ***AUTHOR  Amos, D. E., (SNL) */
-/* ***DESCRIPTION */
+    /* ***BEGIN PROLOGUE  ZDIV */
+    /* ***SUBSIDIARY */
+    /* ***PURPOSE  Subsidiary to ZBESH, ZBESI, ZBESJ, ZBESK, ZBESY, ZAIRY and */
+    /*            ZBIRY */
+    /* ***LIBRARY   SLATEC */
+    /* ***TYPE      ALL (ZDIV-A) */
+    /* ***AUTHOR  Amos, D. E., (SNL) */
+    /* ***DESCRIPTION */
 
-/*     DOUBLE PRECISION COMPLEX DIVIDE C=A/B. */
+    /*     DOUBLE PRECISION COMPLEX DIVIDE C=A/B. */
 
-/* ***SEE ALSO  ZAIRY, ZBESH, ZBESI, ZBESJ, ZBESK, ZBESY, ZBIRY */
-/* ***ROUTINES CALLED  ZABS */
-/* ***REVISION HISTORY  (YYMMDD) */
-/*   830501  DATE WRITTEN */
-/*   910415  Prologue converted to Version 4.0 format.  (BAB) */
-/* ***END PROLOGUE  ZDIV */
-/* ***FIRST EXECUTABLE STATEMENT  ZDIV */
+    /* ***SEE ALSO  ZAIRY, ZBESH, ZBESI, ZBESJ, ZBESK, ZBESY, ZBIRY */
+    /* ***ROUTINES CALLED  ZABS */
+    /* ***REVISION HISTORY  (YYMMDD) */
+    /*   830501  DATE WRITTEN */
+    /*   910415  Prologue converted to Version 4.0 format.  (BAB) */
+    /* ***END PROLOGUE  ZDIV */
+    /* ***FIRST EXECUTABLE STATEMENT  ZDIV */
     bm = 1. / slatec_zabs_impl_(br, bi);
     cc = *br * bm;
     cd = *bi * bm;

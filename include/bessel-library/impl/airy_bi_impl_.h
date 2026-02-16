@@ -1,4 +1,4 @@
-/* 
+/*
     Bessel Library: A C library with routines for computing Bessel functions
 
     File: include/bessel-library/impl/airy_bi_impl_.h
@@ -10,7 +10,7 @@
 
     Description:
         Returns the Airy function of the second kind and complex argument z,
-        i.e., Bi(z), in double complex type for C, or in std::complex<double> 
+        i.e., Bi(z), in double complex type for C, or in std::complex<double>
         type for C++, by means of the routines from the Slatec library.
 */
 
@@ -18,13 +18,13 @@
 #define BESSEL_LIBRARY_AIRY_BI_IMPL_H
 
 #include "cplx_c_cpp_impl_.h"
-#include "slatec_zbiry_impl_.h"
 #include "slatec_flags_impl_.h"
+#include "slatec_zbiry_impl_.h"
 
 /*
     Returns the Airy function of the second kind and complex argument z,
     i.e., Bi(z), by means of the routines from the Slatec library.
-    
+
     Parameters:
     - z, complex argument of Bi(z).
     - derivative, replaces Bi(z) by dBi(z)/dz if 1.
@@ -35,20 +35,18 @@
     Fortran 77 routines from the Slatec library [3] Such Fortran routines,
     and all their dependencies, were carefully translated to C.
 */
-static inline tpdfcplx_impl_ airy_bi_impl_(tpdfcplx_impl_ z,
-    int derivative, int scaled) {
-    
-    int kode = ( scaled == 1 ? 2 : 1 );
+static inline tpdfcplx_impl_ airy_bi_impl_(tpdfcplx_impl_ z, int derivative, int scaled)
+{
+    int kode = (scaled == 1 ? 2 : 1);
     int ierr;
     double x = creal(z);
     double y = cimag(z);
 
     /* Auxiliary arrays */
-    double bir_arr[2] = {0.0, 0.0}, bii_arr[2] = {0.0, 0.0};
+    double bir_arr[2] = { 0.0, 0.0 }, bii_arr[2] = { 0.0, 0.0 };
 
     /* Compute zbiry */
-    slatec_zbiry_impl_(&x, &y, &derivative, &kode, &bir_arr[1], &bii_arr[1],
-        &ierr);
+    slatec_zbiry_impl_(&x, &y, &derivative, &kode, &bir_arr[1], &bii_arr[1], &ierr);
     slatec_flags_zbiry_impl_(ierr);
 
     /* Return */

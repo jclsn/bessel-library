@@ -1,4 +1,4 @@
-/* 
+/*
     Bessel Library: A C library with routines for computing Bessel functions
 
     File: include/bessel-library/impl/cyl_j_full_seq_impl_.h
@@ -20,13 +20,13 @@
 #ifndef BESSEL_LIBRARY_CYL_J_FULL_SEQ_IMPL_H
 #define BESSEL_LIBRARY_CYL_J_FULL_SEQ_IMPL_H
 
-#include <stdlib.h> /* For malloc and free */
-#include <math.h> /* For math operations */
-#include <float.h>  /* For DBL_EPSILON */
 #include "cplx_c_cpp_impl_.h"
+#include "slatec_flags_impl_.h"
 #include "slatec_zbesj_impl_.h"
 #include "slatec_zbesy_impl_.h"
-#include "slatec_flags_impl_.h"
+#include <float.h> /* For DBL_EPSILON */
+#include <math.h> /* For math operations */
+#include <stdlib.h> /* For malloc and free */
 
 /* Fallback for M_PI if not defined by <math.h> */
 #ifndef M_PI
@@ -39,7 +39,7 @@
     {J_nu(z), J_(nu+1)(z), ..., J_(nu+n-1)(z)}, for also negative orders, by
     means of the routines from the Slatec library and recurrence relations for
     negative orders.
-    
+
     Parameters:
     - nu, real order of J_nu(z).
     - n, number n of elements in the sequence for computing the orders nu,
@@ -56,9 +56,9 @@
     for, respectively, nu integer and nu real; in
     the latter case, it yields INFINITY + I * INFINITY when abs(z)=0.
 */
-static inline void cyl_j_full_seq_impl_(double nu, int n, 
-    tpdfcplx_impl_ z, tpdfcplx_impl_ *cyl_j_arr, int scaled) {
-
+static inline void cyl_j_full_seq_impl_(double nu, int n, tpdfcplx_impl_ z,
+                                        tpdfcplx_impl_ *cyl_j_arr, int scaled)
+{
     int kode = (scaled == 1 ? 2 : 1);
     int nz, ierr;
     double x = creal(z);
@@ -67,88 +67,95 @@ static inline void cyl_j_full_seq_impl_(double nu, int n,
     double nu_m = nu + (double)(n - 1);
 
     if (nu >= 0.0) {
-        
         /* Positive orders */
 
         /* Dynamic mem alloc of auxiliary arrays */
-        double *cjr_ptr = (double*)malloc((n + 1) * sizeof(double));
-        double *cji_ptr = (double*)malloc((n + 1) * sizeof(double));
-        ++cjr_ptr; ++cji_ptr;
+        double *cjr_ptr = (double *)malloc((n + 1) * sizeof(double));
+        double *cji_ptr = (double *)malloc((n + 1) * sizeof(double));
+        ++cjr_ptr;
+        ++cji_ptr;
 
         /* Compute zbesj */
-        slatec_zbesj_impl_(&x, &y, &fnu, &kode, &n, &cjr_ptr[0], &cji_ptr[0],
-            &nz, &ierr);
+        slatec_zbesj_impl_(&x, &y, &fnu, &kode, &n, &cjr_ptr[0], &cji_ptr[0], &nz, &ierr);
         slatec_flags_zbesj_impl_(ierr, nz);
-        
+
         /* Store in the array */
         for (int i = 0; i < n; i++) {
             cyl_j_arr[i] = cjr_ptr[i] + I_IMPL_ * cji_ptr[i];
         }
 
         /* Free auxiliary pointers */
-        free(--cjr_ptr); free(--cji_ptr);
+        free(--cjr_ptr);
+        free(--cji_ptr);
 
     } else if (nu_m <= 0.0) {
-        
         /* Only negative orders */
         if (fabs(floor(fnu) - fnu) < DBL_EPSILON) {
-            
             /* Integer negative orders */
-            
+
             /* Dynamic mem alloc of auxiliary arrays */
-            double *cjr_ptr = (double*)malloc((n + 1) * sizeof(double));
-            double *cji_ptr = (double*)malloc((n + 1) * sizeof(double));
-            ++cjr_ptr; ++cji_ptr;
+            double *cjr_ptr = (double *)malloc((n + 1) * sizeof(double));
+            double *cji_ptr = (double *)malloc((n + 1) * sizeof(double));
+            ++cjr_ptr;
+            ++cji_ptr;
 
             /* Compute zbesj */
             double fnu_m = fabs(nu_m);
-            slatec_zbesj_impl_(&x, &y, &fnu_m, &kode, &n, &cjr_ptr[0],
-                &cji_ptr[0], &nz, &ierr);
+            slatec_zbesj_impl_(&x, &y, &fnu_m, &kode, &n, &cjr_ptr[0], &cji_ptr[0], &nz, &ierr);
             slatec_flags_zbesj_impl_(ierr, nz);
-            
+
             /* Store in the array */
             for (int i = 0; i < n; i++) {
                 int tmp = n - 1 - i;
-                cyl_j_arr[i] = pow(-1.0, fnu_m + tmp)
-                         * (cjr_ptr[tmp] + I_IMPL_ * cji_ptr[tmp]);
+                cyl_j_arr[i] = pow(-1.0, fnu_m + tmp) * (cjr_ptr[tmp] + I_IMPL_ * cji_ptr[tmp]);
             }
 
             /* Free auxiliary pointers */
-            free(--cjr_ptr); free(--cji_ptr);
+            free(--cjr_ptr);
+            free(--cji_ptr);
 
-        } else if (fabs(floor(nu_m) - nu_m) >= DBL_EPSILON
-                 && cabs(z) < DBL_EPSILON) {
-            
+        } else if (fabs(floor(nu_m) - nu_m) >= DBL_EPSILON && cabs(z) < DBL_EPSILON) {
             /* Non-int negative orders with abs(z) = 0 */
             for (int i = 0; i < n; i++) {
                 cyl_j_arr[i] = CPLX_IMPL_(INFINITY, INFINITY);
             }
 
         } else {
-
             /* Non-int negative orders with abs(z) != 0 */
 
             /* Dynamic mem alloc of auxiliary arrays */
-            double *cjr_ptr = (double*)malloc((n + 1) * sizeof(double));
-            double *cji_ptr = (double*)malloc((n + 1) * sizeof(double));
-            ++cjr_ptr; ++cji_ptr;
+            double *cjr_ptr = (double *)malloc((n + 1) * sizeof(double));
+            double *cji_ptr = (double *)malloc((n + 1) * sizeof(double));
+            ++cjr_ptr;
+            ++cji_ptr;
 
             /* Compute zbesj */
             double fnu_m = fabs(nu_m);
-            slatec_zbesj_impl_(&x, &y, &fnu_m, &kode, &n, &cjr_ptr[0],
-                &cji_ptr[0], &nz, &ierr);
+            slatec_zbesj_impl_(&x, &y, &fnu_m, &kode, &n, &cjr_ptr[0], &cji_ptr[0], &nz, &ierr);
             slatec_flags_zbesj_impl_(ierr, nz);
 
             /* Dynamic mem alloc of auxiliary arrays */
-            double *cyr_ptr = (double*)malloc((n + 1) * sizeof(double));
-            double *cyi_ptr = (double*)malloc((n + 1) * sizeof(double));
-            double *cwrkr_ptr = (double*)malloc((n + 1) * sizeof(double));
-            double *cwrki_ptr = (double*)malloc((n + 1) * sizeof(double));
-            ++cyr_ptr; ++cyi_ptr; ++cwrkr_ptr; ++cwrki_ptr;
+            double *cyr_ptr = (double *)malloc((n + 1) * sizeof(double));
+            double *cyi_ptr = (double *)malloc((n + 1) * sizeof(double));
+            double *cwrkr_ptr = (double *)malloc((n + 1) * sizeof(double));
+            double *cwrki_ptr = (double *)malloc((n + 1) * sizeof(double));
+            ++cyr_ptr;
+            ++cyi_ptr;
+            ++cwrkr_ptr;
+            ++cwrki_ptr;
 
             /* Compute zbesy */
-            slatec_zbesy_impl_(&x, &y, &fnu_m, &kode, &n, &cyr_ptr[0],
-                &cyi_ptr[0], &nz, &cwrkr_ptr[0], &cwrki_ptr[0], &ierr);
+            slatec_zbesy_impl_(&x,
+                               &y,
+                               &fnu_m,
+                               &kode,
+                               &n,
+                               &cyr_ptr[0],
+                               &cyi_ptr[0],
+                               &nz,
+                               &cwrkr_ptr[0],
+                               &cwrki_ptr[0],
+                               &ierr);
             slatec_flags_zbesy_impl_(ierr, nz);
 
             /* Store in the array */
@@ -156,20 +163,20 @@ static inline void cyl_j_full_seq_impl_(double nu, int n,
                 int tmp1 = n - 1 - i;
                 double tmp2 = (fnu_m + (double)tmp1) * M_PI;
                 /* Eq. (5.5.4) of Ref. [2] */
-                cyl_j_arr[i] = (cjr_ptr[tmp1] + I_IMPL_ * cji_ptr[tmp1])
-                         * cos(tmp2)
-                         - (cyr_ptr[tmp1] + I_IMPL_ * cyi_ptr[tmp1])
-                         * sin(tmp2);
+                cyl_j_arr[i] = (cjr_ptr[tmp1] + I_IMPL_ * cji_ptr[tmp1]) * cos(tmp2) -
+                               (cyr_ptr[tmp1] + I_IMPL_ * cyi_ptr[tmp1]) * sin(tmp2);
             }
 
             /* Free auxiliary pointers */
-            free(--cjr_ptr); free(--cji_ptr);
-            free(--cyr_ptr); free(--cyi_ptr);
-            free(--cwrkr_ptr); free(--cwrki_ptr);
+            free(--cjr_ptr);
+            free(--cji_ptr);
+            free(--cyr_ptr);
+            free(--cyi_ptr);
+            free(--cwrkr_ptr);
+            free(--cwrki_ptr);
         }
 
     } else {
-
         /* Mixed negative and positive orders */
         int n_m = (int)floor(fabs(nu)) + 1;
         int n_p = n - n_m;
@@ -177,57 +184,65 @@ static inline void cyl_j_full_seq_impl_(double nu, int n,
 
         /* Negative orders */
         if (fabs(floor(fnu) - fnu) < DBL_EPSILON) {
-            
             /* Dynamic mem alloc of auxiliary arrays */
-            double *cjr_m_ptr = (double*)malloc((n_m + 1) * sizeof(double));
-            double *cji_m_ptr = (double*)malloc((n_m + 1) * sizeof(double));
-            ++cjr_m_ptr; ++cji_m_ptr;
-            
+            double *cjr_m_ptr = (double *)malloc((n_m + 1) * sizeof(double));
+            double *cji_m_ptr = (double *)malloc((n_m + 1) * sizeof(double));
+            ++cjr_m_ptr;
+            ++cji_m_ptr;
+
             /* Compute zbesj */
-            slatec_zbesj_impl_(&x, &y, &fnu_m, &kode, &n_m, &cjr_m_ptr[0],
-                &cji_m_ptr[0], &nz, &ierr);
+            slatec_zbesj_impl_(&x, &y, &fnu_m, &kode, &n_m, &cjr_m_ptr[0], &cji_m_ptr[0], &nz, &ierr);
             slatec_flags_zbesj_impl_(ierr, nz);
-            
+
             /* Store in the array */
             for (int i = 0; i < n_m; i++) {
                 int tmp = n_m - 1 - i;
-                cyl_j_arr[i] = pow(-1.0, fnu_m + tmp)
-                         * (cjr_m_ptr[tmp] + I_IMPL_ * cji_m_ptr[tmp]);
+                cyl_j_arr[i] = pow(-1.0, fnu_m + tmp) * (cjr_m_ptr[tmp] + I_IMPL_ * cji_m_ptr[tmp]);
             }
-            
-            /* Free auxiliary pointers */
-            free(--cjr_m_ptr); free(--cji_m_ptr);
 
-        } else if (fabs(floor(nu_m) - nu_m) >= DBL_EPSILON
-                 && cabs(z) < DBL_EPSILON) {
-            
+            /* Free auxiliary pointers */
+            free(--cjr_m_ptr);
+            free(--cji_m_ptr);
+
+        } else if (fabs(floor(nu_m) - nu_m) >= DBL_EPSILON && cabs(z) < DBL_EPSILON) {
             /* Store in the array */
             for (int i = 0; i < n_m; i++) {
                 cyl_j_arr[i] = CPLX_IMPL_(INFINITY, INFINITY);
             }
-            
-        } else {
 
+        } else {
             /* Dynamic mem alloc of auxiliary arrays */
-            double *cjr_m_ptr = (double*)malloc((n_m + 1) * sizeof(double));
-            double *cji_m_ptr = (double*)malloc((n_m + 1) * sizeof(double));
-            ++cjr_m_ptr; ++cji_m_ptr;
+            double *cjr_m_ptr = (double *)malloc((n_m + 1) * sizeof(double));
+            double *cji_m_ptr = (double *)malloc((n_m + 1) * sizeof(double));
+            ++cjr_m_ptr;
+            ++cji_m_ptr;
 
             /* Compute zbesj */
-            slatec_zbesj_impl_(&x, &y, &fnu_m, &kode, &n_m, &cjr_m_ptr[0],
-                &cji_m_ptr[0], &nz, &ierr);
+            slatec_zbesj_impl_(&x, &y, &fnu_m, &kode, &n_m, &cjr_m_ptr[0], &cji_m_ptr[0], &nz, &ierr);
             slatec_flags_zbesj_impl_(ierr, nz);
 
             /* Dynamic mem alloc of auxiliary arrays */
-            double *cyr_m_ptr = (double*)malloc((n_m + 1) * sizeof(double));
-            double *cyi_m_ptr = (double*)malloc((n_m + 1) * sizeof(double));
-            double *cwrkr_ptr = (double*)malloc((n_m + 1) * sizeof(double));
-            double *cwrki_ptr = (double*)malloc((n_m + 1) * sizeof(double));
-            ++cyr_m_ptr; ++cyi_m_ptr; ++cwrkr_ptr; ++cwrki_ptr;
+            double *cyr_m_ptr = (double *)malloc((n_m + 1) * sizeof(double));
+            double *cyi_m_ptr = (double *)malloc((n_m + 1) * sizeof(double));
+            double *cwrkr_ptr = (double *)malloc((n_m + 1) * sizeof(double));
+            double *cwrki_ptr = (double *)malloc((n_m + 1) * sizeof(double));
+            ++cyr_m_ptr;
+            ++cyi_m_ptr;
+            ++cwrkr_ptr;
+            ++cwrki_ptr;
 
             /* Compute zbesy */
-            slatec_zbesy_impl_(&x, &y, &fnu_m, &kode, &n_m, &cyr_m_ptr[0],
-                &cyi_m_ptr[0], &nz, &cwrkr_ptr[0], &cwrki_ptr[0], &ierr);
+            slatec_zbesy_impl_(&x,
+                               &y,
+                               &fnu_m,
+                               &kode,
+                               &n_m,
+                               &cyr_m_ptr[0],
+                               &cyi_m_ptr[0],
+                               &nz,
+                               &cwrkr_ptr[0],
+                               &cwrki_ptr[0],
+                               &ierr);
             slatec_flags_zbesy_impl_(ierr, nz);
 
             /* Store in the array */
@@ -235,29 +250,30 @@ static inline void cyl_j_full_seq_impl_(double nu, int n,
                 int tmp1 = n_m - 1 - i;
                 double tmp2 = (fnu_m + (double)tmp1) * M_PI;
                 /* Eq. (5.5.4) of Ref. [2] */
-                cyl_j_arr[i] = (cjr_m_ptr[tmp1] + I_IMPL_ * cji_m_ptr[tmp1])
-                         * cos(tmp2)
-                         - (cyr_m_ptr[tmp1] + I_IMPL_ * cyi_m_ptr[tmp1])
-                         * sin(tmp2);
+                cyl_j_arr[i] = (cjr_m_ptr[tmp1] + I_IMPL_ * cji_m_ptr[tmp1]) * cos(tmp2) -
+                               (cyr_m_ptr[tmp1] + I_IMPL_ * cyi_m_ptr[tmp1]) * sin(tmp2);
             }
 
             /* Free auxiliary pointers */
-            free(--cjr_m_ptr); free(--cji_m_ptr);
-            free(--cyr_m_ptr); free(--cyi_m_ptr);
-            free(--cwrkr_ptr); free(--cwrki_ptr);
+            free(--cjr_m_ptr);
+            free(--cji_m_ptr);
+            free(--cyr_m_ptr);
+            free(--cyi_m_ptr);
+            free(--cwrkr_ptr);
+            free(--cwrki_ptr);
         }
 
         /* Positive orders */
 
         /* Dynamic mem alloc of auxiliary arrays */
-        double *cjr_p_ptr = (double*)malloc((n_p + 1) * sizeof(double));
-        double *cji_p_ptr = (double*)malloc((n_p + 1) * sizeof(double));
-        ++cjr_p_ptr; ++cji_p_ptr;
+        double *cjr_p_ptr = (double *)malloc((n_p + 1) * sizeof(double));
+        double *cji_p_ptr = (double *)malloc((n_p + 1) * sizeof(double));
+        ++cjr_p_ptr;
+        ++cji_p_ptr;
 
         /* Compute zbesj */
         double fnu_p = nu + (double)n_m;
-        slatec_zbesj_impl_(&x, &y, &fnu_p, &kode, &n_p, &cjr_p_ptr[0],
-            &cji_p_ptr[0], &nz, &ierr);
+        slatec_zbesj_impl_(&x, &y, &fnu_p, &kode, &n_p, &cjr_p_ptr[0], &cji_p_ptr[0], &nz, &ierr);
         slatec_flags_zbesj_impl_(ierr, nz);
 
         /* Store in the array */
@@ -267,7 +283,8 @@ static inline void cyl_j_full_seq_impl_(double nu, int n,
         }
 
         /* Free auxiliary pointers */
-        free(--cjr_p_ptr); free(--cji_p_ptr);
+        free(--cjr_p_ptr);
+        free(--cji_p_ptr);
     }
 }
 

@@ -1,4 +1,4 @@
-/* 
+/*
     Bessel Library: A C library with routines for computing Bessel functions
 
     File: include/bessel-library/impl/slatec_zexp_impl_.h
@@ -18,35 +18,33 @@
 
 #include <math.h>
 
-
 /* zexp.f -- translated by f2c (version 20100827) */
 
 /* DECK ZEXP */
 /* Subroutine */
-static inline int slatec_zexp_impl_(double *ar, double *ai, double *br, 
-	double *bi)
+static inline int slatec_zexp_impl_(double *ar, double *ai, double *br, double *bi)
 {
     /* Local variables */
     static double ca, cb, zm;
 
-/* ***BEGIN PROLOGUE  ZEXP */
-/* ***SUBSIDIARY */
-/* ***PURPOSE  Subsidiary to ZBESH, ZBESI, ZBESJ, ZBESK, ZBESY, ZAIRY and */
-/*            ZBIRY */
-/* ***LIBRARY   SLATEC */
-/* ***TYPE      ALL (ZEXP-A) */
-/* ***AUTHOR  Amos, D. E., (SNL) */
-/* ***DESCRIPTION */
+    /* ***BEGIN PROLOGUE  ZEXP */
+    /* ***SUBSIDIARY */
+    /* ***PURPOSE  Subsidiary to ZBESH, ZBESI, ZBESJ, ZBESK, ZBESY, ZAIRY and */
+    /*            ZBIRY */
+    /* ***LIBRARY   SLATEC */
+    /* ***TYPE      ALL (ZEXP-A) */
+    /* ***AUTHOR  Amos, D. E., (SNL) */
+    /* ***DESCRIPTION */
 
-/*     DOUBLE PRECISION COMPLEX EXPONENTIAL FUNCTION B=EXP(A) */
+    /*     DOUBLE PRECISION COMPLEX EXPONENTIAL FUNCTION B=EXP(A) */
 
-/* ***SEE ALSO  ZAIRY, ZBESH, ZBESI, ZBESJ, ZBESK, ZBESY, ZBIRY */
-/* ***ROUTINES CALLED  (NONE) */
-/* ***REVISION HISTORY  (YYMMDD) */
-/*   830501  DATE WRITTEN */
-/*   910415  Prologue converted to Version 4.0 format.  (BAB) */
-/* ***END PROLOGUE  ZEXP */
-/* ***FIRST EXECUTABLE STATEMENT  ZEXP */
+    /* ***SEE ALSO  ZAIRY, ZBESH, ZBESI, ZBESJ, ZBESK, ZBESY, ZBIRY */
+    /* ***ROUTINES CALLED  (NONE) */
+    /* ***REVISION HISTORY  (YYMMDD) */
+    /*   830501  DATE WRITTEN */
+    /*   910415  Prologue converted to Version 4.0 format.  (BAB) */
+    /* ***END PROLOGUE  ZEXP */
+    /* ***FIRST EXECUTABLE STATEMENT  ZEXP */
     zm = exp(*ar);
     ca = zm * cos(*ai);
     cb = zm * sin(*ai);

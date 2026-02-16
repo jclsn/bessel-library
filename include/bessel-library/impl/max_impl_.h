@@ -1,4 +1,4 @@
-/* 
+/*
     Bessel Library: A C library with routines for computing Bessel functions
 
     File: include/bessel-library/impl/max_impl_.h
@@ -15,7 +15,8 @@
 #ifndef BESSEL_LIBRARY_MAX_IMPL_H
 #define BESSEL_LIBRARY_MAX_IMPL_H
 
-static inline int max_impl_(int x, int y) {
+static inline int max_impl_(int x, int y)
+{
     return (x > y ? x : y);
 }
 

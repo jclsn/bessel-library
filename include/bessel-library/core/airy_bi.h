@@ -1,4 +1,4 @@
-/* 
+/*
     Bessel Library: A C library with routines for computing Bessel functions
 
     File: include/bessel-library/core/airy_bi.h
@@ -40,7 +40,7 @@ tpdfcplx_impl_ airy_bi(tpdfcplx_impl_ z)
     return airy_bi_impl_(z, 0, 0);
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -49,7 +49,7 @@ tpdfcplx_impl_ airy_bi(tpdfcplx_impl_ z)
 
     Parameter:
     - z, complex argument of dBi(z)/dz.
-        
+
     Implementation: Similar to the airy_bi() function.
 */
 BESSEL_LIBRARY_API_IMPL_
@@ -59,7 +59,7 @@ tpdfcplx_impl_ airy_bi_diff(tpdfcplx_impl_ z)
     return airy_bi_impl_(z, 1, 0);
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -68,7 +68,7 @@ tpdfcplx_impl_ airy_bi_diff(tpdfcplx_impl_ z)
 
     Parameter:
     - z, complex argument of Bi(z)*exp(-abs(real((2/3)*pow(z,3/2)))).
-        
+
     Implementation: Similar to the airy_bi() function.
 */
 BESSEL_LIBRARY_API_IMPL_
@@ -78,7 +78,7 @@ tpdfcplx_impl_ airy_bi_scal(tpdfcplx_impl_ z)
     return airy_bi_impl_(z, 0, 1);
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -88,7 +88,7 @@ tpdfcplx_impl_ airy_bi_scal(tpdfcplx_impl_ z)
 
     Parameter:
     - z, complex argument of (dBi(z)/dz)*exp(-abs(real((2/3)*pow(z,3/2)))).
-    
+
     Implementation: Similar to the airy_bi() function.
 */
 BESSEL_LIBRARY_API_IMPL_
@@ -98,7 +98,7 @@ tpdfcplx_impl_ airy_bi_diff_scal(tpdfcplx_impl_ z)
     return airy_bi_impl_(z, 1, 1);
 }
 #else
-;
+    ;
 #endif
 
 #endif /* BESSEL_LIBRARY_AIRY_BI_H */

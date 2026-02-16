@@ -1,4 +1,4 @@
-/* 
+/*
     Bessel Library: A C library with routines for computing Bessel functions
 
     File: include/bessel-library/impl/f2c_pow_dd_impl_.h
@@ -17,7 +17,8 @@
 
 #include <math.h>
 
-static inline double f2c_pow_dd_impl_(double *x, double *y) {
+static inline double f2c_pow_dd_impl_(double *x, double *y)
+{
     return pow(*x, *y);
 }
 

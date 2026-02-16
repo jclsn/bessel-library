@@ -1,4 +1,4 @@
-/* 
+/*
     Bessel Library: A C library with routines for computing Bessel functions
 
     File: include/bessel-library/core/cyl_k.h
@@ -30,7 +30,7 @@
     Parameters:
     - nu, real order of K_nu(z).
     - z, complex argument of K_nu(z).
-        
+
     Implementation: Similar to the cyl_k_seq() function.
 */
 BESSEL_LIBRARY_API_IMPL_
@@ -39,7 +39,7 @@ tpdfcplx_impl_ cyl_k(double nu, tpdfcplx_impl_ z)
 {
     /* Array of one size */
     tpdfcplx_impl_ ck[1];
-    
+
     /* Compute cyl_k_full_seq_impl_ */
     cyl_k_full_seq_impl_(nu, 1, z, ck, 0);
 
@@ -47,7 +47,7 @@ tpdfcplx_impl_ cyl_k(double nu, tpdfcplx_impl_ z)
     return ck[0];
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -58,7 +58,7 @@ tpdfcplx_impl_ cyl_k(double nu, tpdfcplx_impl_ z)
     Parameters:
     - nu, real order of K_nu(z)*exp(z).
     - z, complex argument of K_nu(z)*exp(z).
-            
+
     Implementation: Similar to the cyl_k_seq() function.
 */
 BESSEL_LIBRARY_API_IMPL_
@@ -67,7 +67,7 @@ tpdfcplx_impl_ cyl_k_scal(double nu, tpdfcplx_impl_ z)
 {
     /* Array of one size */
     tpdfcplx_impl_ ck[1];
-    
+
     /* Compute cyl_k_full_seq_impl_ */
     cyl_k_full_seq_impl_(nu, 1, z, ck, 1);
 
@@ -75,7 +75,7 @@ tpdfcplx_impl_ cyl_k_scal(double nu, tpdfcplx_impl_ z)
     return ck[0];
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -90,7 +90,7 @@ tpdfcplx_impl_ cyl_k_scal(double nu, tpdfcplx_impl_ z)
     - z, complex argument of K_nu(z).
     - cyl_k_arr, array of size n to output K_nu(z) for the orders nu,
     nu+1, ..., nu+n-1.
-            
+
     Implementation: In general, the implementation is based on the D. E. Amos
     Fortran 77 routines from the Slatec library [3]. Such Fortran routines,
     and all their dependencies, were carefully translated to C. Negative
@@ -99,14 +99,13 @@ tpdfcplx_impl_ cyl_k_scal(double nu, tpdfcplx_impl_ z)
     otherwise.
 */
 BESSEL_LIBRARY_API_IMPL_
-void cyl_k_seq(double nu, int n, tpdfcplx_impl_ z,
-    tpdfcplx_impl_ *cyl_k_arr)
+void cyl_k_seq(double nu, int n, tpdfcplx_impl_ z, tpdfcplx_impl_ *cyl_k_arr)
 #ifndef BESSEL_LIBRARY_IMPORTS
 {
     cyl_k_full_seq_impl_(nu, n, z, cyl_k_arr, 0);
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -122,18 +121,17 @@ void cyl_k_seq(double nu, int n, tpdfcplx_impl_ z,
     - z, complex argument of K_nu(z)*exp(z).
     - cyl_k_scaled_arr, array of size n to output K_nu(z)*exp(z) for the
     orders nu, nu+1, ..., nu+n-1.
-            
+
     Implementation: Similar to the cyl_k_seq() function.
 */
 BESSEL_LIBRARY_API_IMPL_
-void cyl_k_scal_seq(double nu, int n,
-    tpdfcplx_impl_ z, tpdfcplx_impl_ *cyl_k_scaled_arr)
-#ifndef BESSEL_LIBRARY_IMPORTS    
+void cyl_k_scal_seq(double nu, int n, tpdfcplx_impl_ z, tpdfcplx_impl_ *cyl_k_scaled_arr)
+#ifndef BESSEL_LIBRARY_IMPORTS
 {
     cyl_k_full_seq_impl_(nu, n, z, cyl_k_scaled_arr, 1);
 }
 #else
-;
+    ;
 #endif
 
 #endif /* BESSEL_LIBRARY_CYL_K_H */

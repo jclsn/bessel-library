@@ -1,4 +1,4 @@
-/* 
+/*
     Bessel Library: A C library with routines for computing Bessel functions
 
     File: bessel-library/core/airy_ai.h
@@ -39,7 +39,7 @@ tpdfcplx_impl_ airy_ai(double complex z)
     return airy_ai_impl_(z, 0, 0);
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -48,7 +48,7 @@ tpdfcplx_impl_ airy_ai(double complex z)
 
     Parameter:
     - z, complex argument of dAi(z)/dz.
-    
+
     Implementation: Similar to the airy_ai() function.
 */
 BESSEL_LIBRARY_API_IMPL_
@@ -58,7 +58,7 @@ tpdfcplx_impl_ airy_ai_diff(tpdfcplx_impl_ z)
     return airy_ai_impl_(z, 1, 0);
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -77,7 +77,7 @@ tpdfcplx_impl_ airy_ai_scal(tpdfcplx_impl_ z)
     return airy_ai_impl_(z, 0, 1);
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -97,7 +97,7 @@ tpdfcplx_impl_ airy_ai_diff_scal(tpdfcplx_impl_ z)
     return airy_ai_impl_(z, 1, 1);
 }
 #else
-;
+    ;
 #endif
 
 #endif /* BESSEL_LIBRARY_AIRY_AI_H */

@@ -1,4 +1,4 @@
-/* 
+/*
     Bessel Library: A C library with routines for computing Bessel functions
 
     File: include/bessel-library/core/cyl_j.h
@@ -30,7 +30,7 @@
     Parameters:
     - nu, real order of J_nu(z).
     - z, complex argument of J_nu(z).
-    
+
     Implementation: Similar to the cyl_j_seq() function.
 */
 BESSEL_LIBRARY_API_IMPL_
@@ -39,7 +39,7 @@ tpdfcplx_impl_ cyl_j(double nu, tpdfcplx_impl_ z)
 {
     /* Array of one size */
     tpdfcplx_impl_ cj[1];
-    
+
     /* Compute cyl_j_full_seq_impl_ */
     cyl_j_full_seq_impl_(nu, 1, z, cj, 0);
 
@@ -47,7 +47,7 @@ tpdfcplx_impl_ cyl_j(double nu, tpdfcplx_impl_ z)
     return cj[0];
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -58,7 +58,7 @@ tpdfcplx_impl_ cyl_j(double nu, tpdfcplx_impl_ z)
     Parameters:
     - nu, real order of J_nu(z)*exp(-abs(imag(z))).
     - z, complex argument of J_nu(z)*exp(-abs(imag(z))).
-        
+
     Implementation: Similar to the cyl_j_seq() function.
 */
 BESSEL_LIBRARY_API_IMPL_
@@ -67,7 +67,7 @@ tpdfcplx_impl_ cyl_j_scal(double nu, tpdfcplx_impl_ z)
 {
     /* Array of one size */
     tpdfcplx_impl_ cj[1];
-    
+
     /* Compute cyl_j_full_seq_impl_ */
     cyl_j_full_seq_impl_(nu, 1, z, cj, 1);
 
@@ -75,7 +75,7 @@ tpdfcplx_impl_ cyl_j_scal(double nu, tpdfcplx_impl_ z)
     return cj[0];
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -99,14 +99,13 @@ tpdfcplx_impl_ cyl_j_scal(double nu, tpdfcplx_impl_ z)
     the latter case, it yields INFINITY + I * INFINITY when abs(z)=0.
 */
 BESSEL_LIBRARY_API_IMPL_
-void cyl_j_seq(double nu, int n, tpdfcplx_impl_ z,
-    tpdfcplx_impl_ *cyl_j_arr)
+void cyl_j_seq(double nu, int n, tpdfcplx_impl_ z, tpdfcplx_impl_ *cyl_j_arr)
 #ifndef BESSEL_LIBRARY_IMPORTS
 {
     cyl_j_full_seq_impl_(nu, n, z, cyl_j_arr, 0);
 }
 #else
-;
+    ;
 #endif
 
 /*
@@ -122,18 +121,17 @@ void cyl_j_seq(double nu, int n, tpdfcplx_impl_ z,
     - z, complex argument of J_nu(z)*exp(-abs(imag(z))).
     - cyl_j_scal_arr, array of size n to output J_nu(z)*exp(-abs(imag(z)))
     for the orders nu, nu+1, ..., nu+n-1
-        
+
     Implementation: Similar to the cyl_j_seq() function.
 */
 BESSEL_LIBRARY_API_IMPL_
-void cyl_j_scal_seq(double nu, int n,
-    tpdfcplx_impl_ z, tpdfcplx_impl_ *cyl_j_scal_arr)
+void cyl_j_scal_seq(double nu, int n, tpdfcplx_impl_ z, tpdfcplx_impl_ *cyl_j_scal_arr)
 #ifndef BESSEL_LIBRARY_IMPORTS
-{    
+{
     cyl_j_full_seq_impl_(nu, n, z, cyl_j_scal_arr, 1);
 }
 #else
-;
+    ;
 #endif
 
 #endif /* BESSEL_LIBRARY_CYL_J_H */
